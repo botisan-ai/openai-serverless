@@ -11,6 +11,7 @@ openai = "^0.6.4"
 python-dotenv = "^0.17.1"
 boto3 = "^1.17.89"
 jwcrypto = "^0.9"
+aws-lambda-powertools = "^1.16.1"
 
 [tool.poetry.dev-dependencies]
 

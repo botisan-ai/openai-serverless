@@ -3,23 +3,24 @@ service: openai-serverless
 provider:
   name: aws
   runtime: python3.8
+  stage: ${opt:stage, "prod"}
+  region: ${opt:region, env:AWS_REGION, "us-west-2"}
+  profile: ${env:AWS_PROFILE, "x-tech"}
+  lambdaHashingVersion: 20201221
+  memorySize: 256
+  timeout: 30
 
-  memorySize: 512
-  timeout: 60
-  stage: ${opt:stage, self:custom.defaultStage}
-  region: ${opt:region, self:custom.defaultRegion}
-  profile: ${env:AWS_PROFILE, self:custom.defaultProfile}
+variablesResolutionMode: 20210326
+useDotenv: true
 
 package:
   individually: false
 
 functions:
-  - ${file(./resources/importer_functions.yml)}
+  - ${file(./resources/authorizer_function.yml)}
+  - ${file(./resources/openai_functions.yml)}
 
 custom:
-  defaultProfile: ${env:X_TECH_PROFILE, 'x-tech'}
-  defaultStage: ${env:X_TECH_STAGE, 'prod'}
-  defaultRegion: ${env:X_TECH_REGION, 'us-west-2'}
   prefix: ${self:service}-${self:provider.stage}
 
   pythonRequirements:
@@ -28,5 +29,5 @@ custom:
     zip: true
 
 plugins:
-  - serverless-dotenv-plugin
   - serverless-python-requirements
+  - serverless-offline

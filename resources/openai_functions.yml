@@ -1,11 +1,16 @@
-importer:
+split_sentences:
   runtime: python3.8
-  handler: split_sentences.handler
-  module: functions
+  handler: functions/split_sentences.handler
   events:
     - http:
         path: split_sentences
         method: post
         cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
   environment:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}

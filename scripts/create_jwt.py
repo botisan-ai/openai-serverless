@@ -1,6 +1,6 @@
 from jwcrypto import jwk
 
-key = jwk.JWK.generate(kty='RSA', size=2048)
+key = jwk.JWK.generate(kty='oct', size=256)
 
-print(key.export(private_key=True))
-print(key.export(private_key=False))
+print('Signing Key:')
+print(key.export())

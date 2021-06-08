@@ -1,0 +1,5 @@
+authorizer_function:
+  runtime: python3.8
+  handler: functions/authorizer.handler
+  environment:
+    JWT_SIGNING_KEY: ${env:JWT_SIGNING_KEY}

@@ -1,5 +1,35 @@
 [[package]]
 category = "main"
+description = "Python utilities for AWS Lambda functions including but not limited to tracing, logging and custom metric"
+name = "aws-lambda-powertools"
+optional = false
+python-versions = ">=3.6.1,<4.0.0"
+version = "1.16.1"
+
+[package.dependencies]
+aws-xray-sdk = ">=2.8.0,<3.0.0"
+boto3 = ">=1.12,<2.0"
+fastjsonschema = ">=2.14.5,<3.0.0"
+jmespath = ">=0.10.0,<0.11.0"
+
+[package.extras]
+pydantic = ["pydantic (>=1.8.2,<2.0.0)", "email-validator"]
+
+[[package]]
+category = "main"
+description = "The AWS X-Ray SDK for Python (the SDK) enables Python developers to record and emit information from within their applications to the AWS X-Ray service."
+name = "aws-xray-sdk"
+optional = false
+python-versions = "*"
+version = "2.8.0"
+
+[package.dependencies]
+botocore = ">=1.11.3"
+future = "*"
+wrapt = "*"
+
+[[package]]
+category = "main"
 description = "The AWS SDK for Python"
 name = "boto3"
 optional = false
@@ -88,6 +118,25 @@ wrapt = ">=1.10,<2"
 
 [package.extras]
 dev = ["tox", "bump2version (<1)", "sphinx (<2)", "importlib-metadata (<3)", "importlib-resources (<4)", "configparser (<5)", "sphinxcontrib-websupport (<2)", "zipp (<2)", "PyTest (<5)", "PyTest-Cov (<2.6)", "pytest", "pytest-cov"]
+
+[[package]]
+category = "main"
+description = "Fastest Python implementation of JSON schema"
+name = "fastjsonschema"
+optional = false
+python-versions = "*"
+version = "2.15.1"
+
+[package.extras]
+devel = ["colorama", "jsonschema", "json-spec", "pylint", "pytest", "pytest-benchmark", "pytest-cache", "validictory"]
+
+[[package]]
+category = "main"
+description = "Clean single-source support for Python 3 and 2"
+name = "future"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "0.18.2"
 
 [[package]]
 category = "main"
@@ -243,10 +292,18 @@ python-versions = "*"
 version = "1.12.1"
 
 [metadata]
-content-hash = "44a6316a54f92c1318ff097921f34c95b659079b78266e8bdb3722020abdf845"
+content-hash = "5753547a72f21bc0ce666c8cd72e70b48aac47f025a0efd66a40649db2d7321f"
 python-versions = "^3.8"
 
 [metadata.files]
+aws-lambda-powertools = [
+    {file = "aws_lambda_powertools-1.16.1-py3-none-any.whl", hash = "sha256:0dc3b3487e00ea6c987c6387f1b7804be9a02aa3ecc183a1d25717578a9d4d75"},
+    {file = "aws_lambda_powertools-1.16.1.tar.gz", hash = "sha256:c41ed40ccc4cd43257419d8298ab8b05ea4ede29ff185a596d1aa4480fed4f75"},
+]
+aws-xray-sdk = [
+    {file = "aws-xray-sdk-2.8.0.tar.gz", hash = "sha256:90c2fcc982a770e86d009a4c3d2b5c3e372da91cb8284d982bae458e2c0bb268"},
+    {file = "aws_xray_sdk-2.8.0-py2.py3-none-any.whl", hash = "sha256:487e44a2e0b2a5b994f7db5fad3a8115f1ea238249117a119bce8ca2750661bd"},
+]
 boto3 = [
     {file = "boto3-1.17.89-py2.py3-none-any.whl", hash = "sha256:1f02cd513b130f9cd86c99836de6a0a5f78ea55110bdbc9011d9d78ff0fd3204"},
     {file = "boto3-1.17.89.tar.gz", hash = "sha256:06d8dca85a0bb66b7bf2721745895d44691c78dbe7eb3b146702aff85e34af34"},
@@ -319,6 +376,13 @@ cryptography = [
 deprecated = [
     {file = "Deprecated-1.2.12-py2.py3-none-any.whl", hash = "sha256:08452d69b6b5bc66e8330adde0a4f8642e969b9e1702904d137eeb29c8ffc771"},
     {file = "Deprecated-1.2.12.tar.gz", hash = "sha256:6d2de2de7931a968874481ef30208fd4e08da39177d61d3d4ebdf4366e7dbca1"},
+]
+fastjsonschema = [
+    {file = "fastjsonschema-2.15.1-py3-none-any.whl", hash = "sha256:fa2f4bb1e31419c5eb1150f2e0545921712c10c34165b86d33f08f5562ad4b85"},
+    {file = "fastjsonschema-2.15.1.tar.gz", hash = "sha256:671f36d225b3493629b5e789428660109528f373cf4b8a22bac6fa2f8191c2d2"},
+]
+future = [
+    {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
