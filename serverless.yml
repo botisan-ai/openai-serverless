@@ -1,0 +1,32 @@
+service: openai-serverless
+
+provider:
+  name: aws
+  runtime: python3.8
+
+  memorySize: 512
+  timeout: 60
+  stage: ${opt:stage, self:custom.defaultStage}
+  region: ${opt:region, self:custom.defaultRegion}
+  profile: ${env:AWS_PROFILE, self:custom.defaultProfile}
+
+package:
+  individually: false
+
+functions:
+  - ${file(./resources/importer_functions.yml)}
+
+custom:
+  defaultProfile: ${env:X_TECH_PROFILE, 'x-tech'}
+  defaultStage: ${env:X_TECH_STAGE, 'prod'}
+  defaultRegion: ${env:X_TECH_REGION, 'us-west-2'}
+  prefix: ${self:service}-${self:provider.stage}
+
+  pythonRequirements:
+    dockerizePip: non-linux
+    usePoetry: true
+    zip: true
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-python-requirements

@@ -1,0 +1,11 @@
+importer:
+  runtime: python3.8
+  handler: split_sentences.handler
+  module: functions
+  events:
+    - http:
+        path: split_sentences
+        method: post
+        cors: true
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
