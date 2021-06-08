@@ -1,8 +1,3 @@
-try:
-  import unzip_requirements
-except ImportError:
-  pass
-
 import os
 import json
 from typing import Any, Dict

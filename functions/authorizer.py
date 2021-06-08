@@ -1,8 +1,3 @@
-try:
-  import unzip_requirements
-except ImportError:
-  pass
-
 import os
 import json
 from typing import Any, Dict
@@ -17,7 +12,9 @@ config = {
 
 signing_key = jwk.JWK.from_json(config.get('JWT_SIGNING_KEY'))
 
-def generatePolicy(principalId, effect, methodArn):
+# https://blog.codecentric.de/en/2018/04/aws-lambda-authorizer/
+
+def generate_policy(principalId, effect, methodArn):
     authResponse = {}
     authResponse['principalId'] = principalId
 
@@ -50,9 +47,9 @@ def handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, Any]:
         principalId = json.loads(decrypted.claims).get('uid')
     except:
         # Deny access if the token is invalid
-        return generatePolicy(None, 'Deny', event['methodArn'])
+        return generate_policy(None, 'Deny', event['methodArn'])
 
-    return generatePolicy(principalId, 'Allow', event['methodArn'])
+    return generate_policy(principalId, 'Allow', event['methodArn'])
 
 if __name__ == '__main__':
     print(signing_key.export_public())

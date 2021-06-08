@@ -26,7 +26,7 @@ custom:
   pythonRequirements:
     dockerizePip: non-linux
     usePoetry: true
-    zip: true
+    zip: false
 
 plugins:
   - serverless-python-requirements
