@@ -14,3 +14,19 @@ split_sentences:
           type: token
   environment:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+extract_people_names:
+  runtime: python3.8
+  handler: functions/extract_people_names.handler
+  events:
+    - http:
+        path: extract/people_names
+        method: post
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
