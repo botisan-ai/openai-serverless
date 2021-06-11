@@ -5,4 +5,6 @@ __pycache__
 .serverless
 .requirements.zip
 
+.DS_Store
+
 .env*

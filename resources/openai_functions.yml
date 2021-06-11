@@ -1,6 +1,6 @@
 split_sentences:
   runtime: python3.8
-  handler: functions/split_sentences.handler
+  handler: functions.split_sentences.handler
   events:
     - http:
         path: split_sentences
@@ -16,7 +16,7 @@ split_sentences:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
 extract_people_names:
   runtime: python3.8
-  handler: functions/extract_people_names.handler
+  handler: functions.extract_people_names.handler
   events:
     - http:
         path: extract/people_names
