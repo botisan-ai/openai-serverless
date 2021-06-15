@@ -30,3 +30,19 @@ extract_people_names:
           type: token
   environment:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+extract_todo_list:
+  runtime: python3.8
+  handler: functions.extract_todo_list.handler
+  events:
+    - http:
+        path: extract/todo_list
+        method: post
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}

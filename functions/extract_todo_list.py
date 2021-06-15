@@ -5,9 +5,10 @@ from typing import Any, Dict
 from dotenv import dotenv_values
 from aws_lambda_powertools.utilities.typing import LambdaContext
 import openai
+import dateparser
 
 # in lambdas, try to use more absolute package import
-from functions.prompts import extract_people_names_prompt
+from functions.prompts import extract_todo_list_prompt
 
 config = {
     **dotenv_values(os.path.join(os.path.dirname(__file__), '..', '.env')),
@@ -42,16 +43,16 @@ def handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, Any]:
             }
 
         response = openai.Completion.create(
-            engine='curie-instruct-beta',
-            prompt=extract_people_names_prompt(message),
+            engine='davinci-instruct-beta',
+            prompt=extract_todo_list_prompt(message),
             max_tokens=256,
-            temperature=0.5,
+            temperature=0.3,
             stop=['####'],
         )
 
-        people_names = response.get('choices', {})[0].get('text')
+        todo_list = response.get('choices', {})[0].get('text')
 
-        if people_names is None:
+        if todo_list is None:
             return {
                 'statusCode': 400,
                 'body': json.dumps({'message': 'no sentences produced'}),
@@ -60,12 +61,13 @@ def handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, Any]:
                 },
             }
 
-        people_names = list(
-            filter(lambda s: s.strip(), str(people_names).split('\n')))
+        # do this to ensure valid json
+        todo_list = json.loads(todo_list)
+        # TODO: process time as needed by Siri
 
         return {
             'statusCode': 200,
-            'body': json.dumps({'people_names': people_names}),
+            'body': json.dumps({'todo_list': todo_list}),
             'headers': {
                 'Content-Type': 'application/json',
             },
