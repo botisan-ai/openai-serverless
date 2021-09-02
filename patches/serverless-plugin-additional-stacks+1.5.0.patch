@@ -1,0 +1,28 @@
+diff --git a/node_modules/serverless-plugin-additional-stacks/index.js b/node_modules/serverless-plugin-additional-stacks/index.js
+index d5f1379..0b1eff9 100644
+--- a/node_modules/serverless-plugin-additional-stacks/index.js
++++ b/node_modules/serverless-plugin-additional-stacks/index.js
+@@ -58,6 +58,7 @@ class AdditionalStacksPlugin {
+                 usage: 'Additional stack name to deploy',
+                 shortcut: 'k',
+                 required: false,
++                type: 'string',
+               },
+             },
+           },
+@@ -66,6 +67,7 @@ class AdditionalStacksPlugin {
+           'skip-additionalstacks': {
+             usage: 'Skip deploying additional stacks',
+             required: false,
++            type: 'boolean',
+           },
+         },
+       },
+@@ -81,6 +83,7 @@ class AdditionalStacksPlugin {
+                 usage: 'Additional stack name to remove',
+                 shortcut: 'k',
+                 required: false,
++                type: 'string',
+               },
+             },
+           },

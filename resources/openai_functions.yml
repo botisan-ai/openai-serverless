@@ -46,3 +46,39 @@ extract_todo_list:
           type: token
   environment:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+start_finetune_job:
+  runtime: python3.8
+  handler: functions.start_finetune_job.handler
+  events:
+    - http:
+        path: finetune_jobs/start
+        method: post
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+    BUCKET_NAME:
+      Fn::ImportValue: ${self:custom.prefix}-finetune-data-bucket-name
+upload_finetune_file:
+  runtime: python3.8
+  handler: functions.upload_finetune_file.handler
+  events:
+    - http:
+        path: finetune_jobs/upload
+        method: get
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+    BUCKET_NAME:
+      Fn::ImportValue: ${self:custom.prefix}-finetune-data-bucket-name

@@ -1,0 +1,13 @@
+stack:
+  StackName: ${self:custom.prefix}-s3
+  Resources:
+    FinetuneDataBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.prefix}-finetune-data-set
+  Outputs:
+    FinetuneDataBucketName:
+      Value:
+        Ref: FinetuneDataBucket
+      Export:
+        Name: ${self:custom.prefix}-finetune-data-bucket-name

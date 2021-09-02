@@ -1,16 +1,21 @@
 {
   "name": "openai-serverless",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "OpenAI Serverless Functions",
   "main": "index.js",
   "author": "Xanthous Tech <hi@x-tech.io>",
   "license": "ISC",
   "private": true,
+  "scripts": {
+    "postinstall": "patch-package"
+  },
   "devDependencies": {
     "dotenv-cli": "^4.0.0",
+    "patch-package": "^6.4.7",
     "serverless": "^2.44.0",
     "serverless-domain-manager": "^5.1.0",
     "serverless-offline": "^7.0.0",
+    "serverless-plugin-additional-stacks": "^1.5.0",
     "serverless-python-requirements": "^5.1.1"
   }
 }
