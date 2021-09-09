@@ -43,7 +43,7 @@ def handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, Any]:
         file_id = file_response.get('id', '')
         finetune_response = openai.FineTune.create(training_file=file_id)
         new_s3_object = s3_resource.Object(BUCKET_NAME, f'{uid}/{file_id}')
-        new_s3_object.copy_from(CopySource=key)
+        new_s3_object.copy_from(CopySource=dict(Bucket=BUCKET_NAME, Key=key))
         s3_object.delete()
 
         return {
