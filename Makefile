@@ -2,16 +2,25 @@
 export
 
 create-jwt:
-	poetry run python ./scripts/create_jwt.py
+	pipenv run python ./scripts/create_jwt.py
 
 sign-jwt:
-	poetry run python ./scripts/sign_jwt.py $(user)
+	pipenv run python ./scripts/sign_jwt.py $(user)
 
 authorizer:
-	poetry run python ./functions/authorizer.py
+	pipenv run python ./functions/authorizer.py
 
 split-sentences:
-	poetry run python ./functions/split_sentences.py
+	pipenv run python ./functions/split_sentences.py
+
+openai-api:
+	pipenv run openai api $(args)
+
+list-models:
+	pipenv run openai api models.list
+
+delete-model:
+	pipenv run openai api models.delete -i $(model)
 
 local:
 	yarn serverless offline start $(args)

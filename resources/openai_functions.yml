@@ -82,3 +82,36 @@ upload_finetune_file:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
     BUCKET_NAME:
       Fn::ImportValue: ${self:custom.prefix}-finetune-data-bucket-name
+list_finetune_jobs:
+  runtime: python3.8
+  handler: functions.list_finetune_jobs.handler
+  events:
+    - http:
+        path: finetune_jobs/list
+        method: get
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+
+list_models:
+  runtime: python3.8
+  handler: functions.list_models.handler
+  events:
+    - http:
+        path: models/list
+        method: get
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
