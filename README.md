@@ -7,7 +7,7 @@ A Stack for managing OpenAI API access using Serverless Framework against AWS.
 - NodeJS LTS
 - yarn
 - pyenv
-- Poetry
+- Pipenv
 - make
 
 ## Install
