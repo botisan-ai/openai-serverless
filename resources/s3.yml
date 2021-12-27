@@ -5,9 +5,20 @@ stack:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.prefix}-finetune-data-set
+    DataBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.prefix}-data
+        VersioningConfiguration:
+          Status: Enabled
   Outputs:
     FinetuneDataBucketName:
       Value:
         Ref: FinetuneDataBucket
       Export:
         Name: ${self:custom.prefix}-finetune-data-bucket-name
+    DataBucketName:
+      Value:
+        Ref: DataBucket
+      Export:
+        Name: ${self:custom.prefix}-data-bucket-name

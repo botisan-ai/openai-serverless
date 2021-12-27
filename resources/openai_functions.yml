@@ -82,6 +82,20 @@ upload_finetune_file:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
     BUCKET_NAME:
       Fn::ImportValue: ${self:custom.prefix}-finetune-data-bucket-name
+
+create_file:
+  runtime: python3.8
+  handler: functions.create_file.handler
+  events:
+    - s3:
+        existing: true
+        bucket: ${self:custom.prefix}-data
+        event: s3:ObjectCreated:*
+        rules:
+          - suffix: ".jsonl"
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+
 list_finetune_jobs:
   runtime: python3.8
   handler: functions.list_finetune_jobs.handler
@@ -105,6 +119,23 @@ list_models:
   events:
     - http:
         path: models/list
+        method: get
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+
+list_files:
+  runtime: python3.8
+  handler: functions.list_files.handler
+  events:
+    - http:
+        path: files/list
         method: get
         cors: true
         authorizer:
