@@ -70,7 +70,14 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
                 },
             }
 
-        prompt = better_answers_prompt(input.question, selected_documents, examples=input.examples, examples_context=input.examples_context)
+        prompt = better_answers_prompt(
+            input.model,
+            input.max_tokens
+            input.question,
+            selected_documents,
+            examples=input.examples,
+            examples_context=input.examples_context,
+        )
 
         completion_response = openai.Completion.create(
             engine=input.model,
