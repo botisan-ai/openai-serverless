@@ -9,6 +9,7 @@ python-dotenv = "*"
 boto3 = "*"
 jwcrypto = "*"
 pydantic = "*"
+regex = "*"
 
 [dev-packages]
 autopep8 = "*"

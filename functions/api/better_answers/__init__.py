@@ -70,7 +70,7 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
                 },
             }
 
-        prompt = better_answers_prompt(
+        prompt, idx = better_answers_prompt(
             input.model,
             input.max_tokens,
             input.question,
@@ -98,7 +98,7 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
             model=completion_response.get('model'),
             prompt=prompt if input.return_prompt else None,
             search_model=input.search_model,
-            selected_documents=[SearchDocument(**d.dict(exclude={'metadata'})) if not input.return_metadata else d for d in selected_documents],
+            selected_documents=[SearchDocument(**d.dict(exclude={'metadata'})) if not input.return_metadata else d for d in selected_documents[idx:]],
         )
 
         return {

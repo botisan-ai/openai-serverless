@@ -47,4 +47,4 @@ A: {example[1]}""" if examples_context is not None else ""
         i += 1
         prompt = combined_prompt(example_context_prompt, question, selected_documents[i:])
 
-    return prompt
+    return prompt, i
