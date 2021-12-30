@@ -56,3 +56,7 @@ curl --request POST \
 ## Current Methods
 
 TODO
+
+## License
+
+[MIT](./LICENSE)
