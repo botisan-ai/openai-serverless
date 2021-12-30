@@ -3,7 +3,6 @@ import json
 from typing import Any, Dict
 from dotenv import dotenv_values
 from jwcrypto import jwk, jwt
-from aws_lambda_powertools.utilities.typing import LambdaContext
 
 config = {
     **dotenv_values(os.path.join(os.path.dirname(__file__), '..', '.env')),
@@ -35,7 +34,7 @@ def generate_policy(principalId, effect, methodArn):
 
     return authResponse
 
-def handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, Any]:
+def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
     try:
         # test the JWT
         token = str(event['authorizationToken']).replace('jwt ', '')

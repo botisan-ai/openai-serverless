@@ -17,6 +17,11 @@ useDotenv: true
 
 package:
   individually: false
+  patterns:
+    - '!**'
+    - './functions/**/*'
+    - '!./functions/**/__pycache__/*'
+    - '!./functions/__pycache__/*'
 
 functions:
   - ${file(./resources/authorizer_function.yml)}
@@ -36,6 +41,27 @@ custom:
     dockerizePip: non-linux
     usePipenv: true
     zip: false
+    noDeploy:
+      # unnecessary openai dependencies
+      - openpyxl
+      - et-xmlfile
+      - pandas
+      - numpy
+      - python-dateutil
+      - six
+      - pytz
+      - pandas-stubs
+      - tqdm
+      # boto3 dependencies
+      - boto3
+      - botocore
+      - jmespath
+      - s3transfer
+      # jwcrypto deps
+      - cryptography
+      # pydantic deps
+      - pydantic
+      - typing-extensions
 
   customDomains:
     domainName: ${env:DOMAIN_NAME}

@@ -1,88 +1,3 @@
-split_sentences:
-  runtime: python3.8
-  handler: functions.split_sentences.handler
-  events:
-    - http:
-        path: split_sentences
-        method: post
-        cors: true
-        authorizer:
-          name: authorizer_function
-          resultTtlInSeconds: 0
-          identitySource: method.request.header.Authorization
-          identityValidationExpression: jwt .+
-          type: token
-  environment:
-    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
-extract_people_names:
-  runtime: python3.8
-  handler: functions.extract_people_names.handler
-  events:
-    - http:
-        path: extract/people_names
-        method: post
-        cors: true
-        authorizer:
-          name: authorizer_function
-          resultTtlInSeconds: 0
-          identitySource: method.request.header.Authorization
-          identityValidationExpression: jwt .+
-          type: token
-  environment:
-    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
-extract_todo_list:
-  runtime: python3.8
-  handler: functions.extract_todo_list.handler
-  events:
-    - http:
-        path: extract/todo_list
-        method: post
-        cors: true
-        authorizer:
-          name: authorizer_function
-          resultTtlInSeconds: 0
-          identitySource: method.request.header.Authorization
-          identityValidationExpression: jwt .+
-          type: token
-  environment:
-    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
-start_finetune_job:
-  runtime: python3.8
-  handler: functions.start_finetune_job.handler
-  events:
-    - http:
-        path: finetune_jobs/start
-        method: post
-        cors: true
-        authorizer:
-          name: authorizer_function
-          resultTtlInSeconds: 0
-          identitySource: method.request.header.Authorization
-          identityValidationExpression: jwt .+
-          type: token
-  environment:
-    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
-    BUCKET_NAME:
-      Fn::ImportValue: ${self:custom.prefix}-finetune-data-bucket-name
-upload_finetune_file:
-  runtime: python3.8
-  handler: functions.upload_finetune_file.handler
-  events:
-    - http:
-        path: finetune_jobs/upload
-        method: get
-        cors: true
-        authorizer:
-          name: authorizer_function
-          resultTtlInSeconds: 0
-          identitySource: method.request.header.Authorization
-          identityValidationExpression: jwt .+
-          type: token
-  environment:
-    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
-    BUCKET_NAME:
-      Fn::ImportValue: ${self:custom.prefix}-finetune-data-bucket-name
-
 create_file:
   runtime: python3.8
   handler: functions.create_file.handler
@@ -96,12 +11,12 @@ create_file:
   environment:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
 
-list_finetune_jobs:
+list_files:
   runtime: python3.8
-  handler: functions.list_finetune_jobs.handler
+  handler: functions.list_files.handler
   events:
     - http:
-        path: finetune_jobs/list
+        path: files/list
         method: get
         cors: true
         authorizer:
@@ -130,12 +45,31 @@ list_models:
   environment:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
 
-list_files:
+better_answers:
   runtime: python3.8
-  handler: functions.list_files.handler
+  layers:
+    - arn:aws:lambda:us-west-2:770693421928:layer:Klayers-python38-pydantic:3
+  handler: functions.api.better_answers.handler
   events:
     - http:
-        path: files/list
+        path: /better_answers
+        method: post
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+
+list_finetune_jobs:
+  runtime: python3.8
+  handler: functions.list_finetune_jobs.handler
+  events:
+    - http:
+        path: finetune_jobs/list
         method: get
         cors: true
         authorizer:
@@ -146,3 +80,41 @@ list_files:
           type: token
   environment:
     OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+
+start_finetune_job:
+  runtime: python3.8
+  handler: functions.start_finetune_job.handler
+  events:
+    - http:
+        path: finetune_jobs/start
+        method: post
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+    BUCKET_NAME:
+      Fn::ImportValue: ${self:custom.prefix}-finetune-data-bucket-name
+
+upload_finetune_file:
+  runtime: python3.8
+  handler: functions.upload_finetune_file.handler
+  events:
+    - http:
+        path: finetune_jobs/upload
+        method: get
+        cors: true
+        authorizer:
+          name: authorizer_function
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: jwt .+
+          type: token
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+    BUCKET_NAME:
+      Fn::ImportValue: ${self:custom.prefix}-finetune-data-bucket-name

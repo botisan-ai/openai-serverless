@@ -8,8 +8,7 @@ openai = "*"
 python-dotenv = "*"
 boto3 = "*"
 jwcrypto = "*"
-aws-lambda-powertools = "*"
-dateparser = "*"
+pydantic = "*"
 
 [dev-packages]
 autopep8 = "*"
