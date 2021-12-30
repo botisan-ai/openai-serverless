@@ -55,34 +55,4 @@ curl --request POST \
 
 ## Current Methods
 
-### Split Sentences
-```
-POST /split_sentences
-{
-	"sentence": "This is a sentence splitter that can split sentences into its own line. Please feel free to try it out!"
-}
-
-Response:
-{
-  "sentences": [
-    "This is a sentence splitter that can split sentences into its own line.",
-    "Please feel free to try it out!"
-  ]
-}
-```
-
-### Extract People Names
-```
-POST /extract/people_names
-{
-	"sentence": "This is a sentence splitter that can split sentences into its own line. Please feel free to try it out!"
-}
-
-Response:
-{
-  "sentences": [
-    "This is a sentence splitter that can split sentences into its own line.",
-    "Please feel free to try it out!"
-  ]
-}
-```
+TODO
