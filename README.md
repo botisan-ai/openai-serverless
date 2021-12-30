@@ -64,12 +64,12 @@ curl --request POST \
 	"temperature": 0,
 	"search_model": "babbage",
 	"model": "davinci-instruct-beta-v3",
-  "examples_context": "In 2017, U.S. life expectancy was 78.6 years.",
-  "examples": [["What is human life expectancy in the United States?","78 years."]],
-  "max_tokens": 32,
+	"examples_context": "In 2017, U.S. life expectancy was 78.6 years.",
+"examples": [["What is human life expectancy in the United States?","78 years."]],
+	"max_tokens": 32,
 	"max_rerank": 50,
 	"z_threshold": 1,
-  "stop": ["\n", "===", "<|endoftext|>"]
+	"stop": ["\n", "===", "<|endoftext|>"]
 }'
 ```
 

@@ -4,10 +4,11 @@ from functions.encoder import get_encoder
 from .output import SearchDocument
 
 def combined_prompt(example_context_prompt: str, question: str, selected_documents: List[SearchDocument]):
-    return f"""Please answer the question according to the given context.
+    return f"""Please answer the question according to the given context. If nothing relevant is found, politely explain.
 {example_context_prompt}
 ===
 Context: {' '.join([d.text for d in selected_documents])}
+===
 Q: {question}
 A:"""
 
@@ -31,14 +32,7 @@ def better_answers_prompt(
         encoder = get_encoder('gpt3')
         max_quota = 2048
 
-    example_context_prompt = ''
-
-    for example in examples:
-        if isinstance(example, list) and len(example) == 2:
-            example_context_prompt += f"""===
-Context: {examples_context}
-Q: {example[0]}
-A: {example[1]}""" if examples_context is not None else ""
+    example_context_prompt = f"===\nContext: {examples_context}\n===\n" + '\n---\n'.join([f"Q: {example[0]}\nA: {example[1]}" if examples_context is not None else "" for example in examples])
 
     i = 0
     prompt = combined_prompt(example_context_prompt, question, selected_documents[i:])
